@@ -104,7 +104,7 @@ export default function Sidebar({ portal, userName = 'User' }: SidebarProps) {
               <Zap size={14} className="text-white" />
             </div>
             <span className="font-bold text-gray-900 text-sm">
-              Skill<span className="text-indigo-600">Bridge</span>
+              Hire<span className="text-indigo-600">-X</span>
             </span>
           </Link>
         )}

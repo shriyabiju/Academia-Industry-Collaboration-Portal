@@ -121,7 +121,7 @@ export default function LoginPage() {
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-3xl">
           <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold text-gray-900">Welcome to SkillBridge</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Welcome to Hire-X</h1>
             <p className="text-gray-500 mt-2">Select your role to access your personalized portal</p>
           </div>
 

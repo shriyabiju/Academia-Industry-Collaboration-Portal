@@ -25,7 +25,7 @@ export default function Navbar() {
               <Zap size={16} className="text-white" />
             </div>
             <span className="font-bold text-gray-900 text-lg">
-              Skill<span className="text-indigo-600">Bridge</span>
+              Hire<span className="text-indigo-600">-X</span>
             </span>
           </Link>
 

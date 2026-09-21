@@ -66,14 +66,14 @@ export default function LandingPage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <Badge variant="indigo" className="mb-6">
-                Smart India Hackathon 2024
+                Smart India Hackathon 2026
               </Badge>
               <h1 className="text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight">
                 From Skills to{' '}
                 <span className="text-indigo-600">Opportunities</span>
               </h1>
               <p className="mt-6 text-xl text-gray-600 leading-relaxed max-w-lg">
-                SkillBridge connects academic learning, competency assessment,
+                Hire-X connects academic learning, competency assessment,
                 skill development and industry opportunities through a{' '}
                 <strong className="text-gray-800">continuous skill intelligence loop</strong>.
               </p>
@@ -143,9 +143,9 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <Badge variant="indigo" className="mb-4">The Skill Intelligence Loop</Badge>
-            <h2 className="text-4xl font-bold text-gray-900">How SkillBridge Works</h2>
+            <h2 className="text-4xl font-bold text-gray-900">How Hire-X Works</h2>
             <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
-              Unlike a simple job board, SkillBridge operates a continuous intelligence loop that
+              Unlike a simple job board, Hire-X operates a continuous intelligence loop that
               keeps your competency profile current and opportunities relevant.
             </p>
           </div>
@@ -398,7 +398,7 @@ export default function LandingPage() {
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900">Why SkillBridge?</h2>
+            <h2 className="text-4xl font-bold text-gray-900">Why Hire-X?</h2>
             <p className="mt-4 text-lg text-gray-500 max-w-xl mx-auto">
               Built different from day one — not a job board, but a continuous skill intelligence platform.
             </p>
@@ -422,7 +422,7 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-white">Ready to close your skill gaps?</h2>
           <p className="mt-4 text-xl text-indigo-100 max-w-xl mx-auto">
-            Join thousands of students, academicians and industry partners already using SkillBridge to
+            Join thousands of students, academicians and industry partners already using Hire-X to
             build a smarter talent ecosystem.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
@@ -450,7 +450,7 @@ export default function LandingPage() {
                 <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center">
                   <Zap size={14} className="text-white" />
                 </div>
-                <span className="font-bold text-white">SkillBridge</span>
+                <span className="font-bold text-white">Hire-X</span>
               </div>
               <p className="text-sm leading-relaxed">
                 Academia–Industry Collaboration Portal powered by continuous skill intelligence.
@@ -483,7 +483,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="border-t border-gray-800 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs">© 2024 SkillBridge. Smart India Hackathon Prototype. All rights reserved.</p>
+            <p className="text-xs">© 2024 Hire-X. Smart India Hackathon Prototype. All rights reserved.</p>
             <p className="text-xs">Built with Next.js · TypeScript · Tailwind CSS</p>
           </div>
         </div>
