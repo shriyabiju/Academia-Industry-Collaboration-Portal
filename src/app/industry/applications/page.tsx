@@ -8,8 +8,12 @@ const apps = [
   { id: 1, student: 'Deepshikha Chaurasia', role: 'Software Engineering Intern', match: 91, status: 'Shortlisted', date: '2026-09-15' },
   { id: 2, student: 'Shriya Biju', role: 'Software Engineering Intern', match: 84, status: 'Under Review', date: '2026-09-16' },
   { id: 3, student: 'Bakir', role: 'Software Engineering Intern', match: 79, status: 'Under Review', date: '2026-09-17' },
-  { id: 4, student: 'Deepshikha Chaurasia', role: 'Data Analyst Intern', match: 88, status: 'Interview Scheduled', date: '2026-09-14' },
-  { id: 5, student: 'Shriya Biju', role: 'Data Analyst Intern', match: 76, status: 'Under Review', date: '2026-09-16' },
+  { id: 4, student: 'Dhruva', role: 'Software Engineering Intern', match: 74, status: 'Under Review', date: '2026-09-18' },
+  { id: 5, student: 'Abhinav Nair', role: 'Software Engineering Intern', match: 65, status: 'Under Review', date: '2026-09-19' },
+  { id: 6, student: 'Deepshikha Chaurasia', role: 'Data Analyst Intern', match: 88, status: 'Interview Scheduled', date: '2026-09-14' },
+  { id: 7, student: 'Shriya Biju', role: 'Data Analyst Intern', match: 76, status: 'Under Review', date: '2026-09-16' },
+  { id: 8, student: 'Dhruva', role: 'Data Analyst Intern', match: 70, status: 'Under Review', date: '2026-09-17' },
+  { id: 9, student: 'Abhinav Nair', role: 'Data Analyst Intern', match: 62, status: 'Under Review', date: '2026-09-18' },
 ]
 
 const statusVariant: Record<string, 'success' | 'info' | 'warning' | 'purple'> = {
