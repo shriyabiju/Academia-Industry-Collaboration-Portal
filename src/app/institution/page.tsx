@@ -70,23 +70,23 @@ export default function InstitutionAnalyticsPage() {
         </div>
       </div>
 
-      {/* ── Filters ── */}
+      {/* ── Filters — wrap gracefully on mobile ── */}
       <Card padding="sm">
-        <div className="flex items-center gap-3 flex-wrap">
-          <Filter size={14} className="text-gray-400" />
-          <select value={dept} onChange={(e) => setDept(e.target.value)} className="select-base">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <Filter size={14} className="text-gray-400 flex-shrink-0" />
+          <select value={dept} onChange={(e) => setDept(e.target.value)} className="select-base flex-1 min-w-32">
             {mockDepartmentFilter.map((d) => <option key={d}>{d}</option>)}
           </select>
-          <select className="select-base">
+          <select className="select-base flex-1 min-w-28">
             {['All Courses', 'B.Tech', 'M.Tech', 'MBA', 'PhD'].map((c) => <option key={c}>{c}</option>)}
           </select>
-          <select className="select-base">
+          <select className="select-base flex-1 min-w-24">
             {['All Years', 'Year 1', 'Year 2', 'Year 3', 'Year 4'].map((y) => <option key={y}>{y}</option>)}
           </select>
-          <select value={period} onChange={(e) => setPeriod(e.target.value)} className="select-base">
+          <select value={period} onChange={(e) => setPeriod(e.target.value)} className="select-base flex-1 min-w-28">
             {['2025–26', '2024–25', '2023–24'].map((y) => <option key={y}>{y}</option>)}
           </select>
-          <Button variant="primary" size="sm" className="ml-auto">Apply Filters</Button>
+          <Button variant="primary" size="sm" className="flex-shrink-0">Apply Filters</Button>
         </div>
       </Card>
 
@@ -140,7 +140,7 @@ export default function InstitutionAnalyticsPage() {
 
       {/* ── Tab: Skill Gaps ── */}
       {activeTab === 'overview' && (
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="lg:col-span-2">
             <div className="flex items-center justify-between mb-1">
               <h2 className="text-sm font-semibold text-gray-900">Top Student Skill Gaps</h2>
@@ -208,7 +208,7 @@ export default function InstitutionAnalyticsPage() {
 
       {/* ── Tab: Placement Pipeline ── */}
       {activeTab === 'placement' && (
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
             <h2 className="text-sm font-semibold text-gray-900 mb-1">Internship Funnel</h2>
             <p className="text-xs text-gray-400 mb-4">Apr–Sep 2026</p>
@@ -278,10 +278,10 @@ export default function InstitutionAnalyticsPage() {
           <h2 className="text-sm font-semibold text-gray-900 mb-1">Career Domain Distribution</h2>
           <p className="text-xs text-gray-400 mb-4">Students by career interest domain</p>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={mockCareerDomainData} layout="vertical" margin={{ left: 120 }}>
+            <BarChart data={mockCareerDomainData} layout="vertical" margin={{ left: 90, right: 8 }}>
               <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f3f4f6" />
               <XAxis type="number" tick={{ fontSize: 10 }} />
-              <YAxis type="category" dataKey="domain" tick={{ fontSize: 11 }} width={120} />
+              <YAxis type="category" dataKey="domain" tick={{ fontSize: 10, fill: '#6b7280' }} width={90} />
               <Tooltip contentStyle={{ fontSize: 11, borderRadius: 10 }} />
               <Bar dataKey="students" radius={[0, 6, 6, 0]} name="Students" maxBarSize={18}>
                 {mockCareerDomainData.map((entry, i) => (

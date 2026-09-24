@@ -42,7 +42,7 @@ export default function SkillsPage() {
     <div className="space-y-8 page-enter">
 
       {/* ── Header ── */}
-      <div className="flex items-start justify-between flex-wrap gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
         <div>
           <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Skill Intelligence</p>
           <h1 className="text-2xl font-bold text-gray-900">Skill Intelligence Profile</h1>
@@ -50,50 +50,53 @@ export default function SkillsPage() {
             Verified competency profile built from assessments, projects and industry feedback
           </p>
         </div>
-        <Link href="/student/opportunities">
-          <Button variant="primary">
+        <Link href="/student/opportunities" className="sm:flex-shrink-0">
+          <Button variant="primary" className="w-full sm:w-auto">
             <Briefcase size={14} /> Find Opportunities
           </Button>
         </Link>
       </div>
 
       {/* ── Hero score card ── */}
-      <div className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl p-6 text-white shadow-card-md overflow-hidden relative">
+      <div className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl p-5 sm:p-6 text-white shadow-card-md overflow-hidden relative">
         <div className="absolute inset-0 opacity-[0.06] pointer-events-none"
           style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
-        <div className="relative flex flex-wrap items-center gap-8">
+        <div className="relative flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-6">
+          {/* Big score */}
           <div>
             <p className="text-indigo-200 text-sm font-medium">Overall Competency Score</p>
-            <div className="text-6xl font-extrabold mt-1 tabular">
+            <div className="text-5xl sm:text-6xl font-extrabold mt-1 tabular">
               <AnimatedNumber value={currentStudent.overallCompetency} suffix="%" />
             </div>
             <p className="text-indigo-300 text-sm mt-1">
               Based on {currentStudent.skillsAssessed} skills assessed
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-6 text-center">
+          {/* Category averages */}
+          <div className="grid grid-cols-3 gap-4 sm:gap-6 text-center">
             {[
               { label: 'Technical',  value: categoryAvg(technical), color: 'text-white' },
               { label: 'Domain',     value: categoryAvg(domain),    color: 'text-indigo-200' },
-              { label: 'Soft Skills',value: categoryAvg(soft),      color: 'text-indigo-300' },
+              { label: 'Soft',       value: categoryAvg(soft),      color: 'text-indigo-300' },
             ].map((item) => (
               <div key={item.label}>
-                <div className={`text-3xl font-bold ${item.color} tabular`}>{item.value}%</div>
+                <div className={`text-2xl sm:text-3xl font-bold ${item.color} tabular`}>{item.value}%</div>
                 <div className="text-xs text-indigo-300 mt-0.5">{item.label}</div>
               </div>
             ))}
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          {/* Level counts */}
+          <div className="grid grid-cols-3 gap-3 sm:gap-4">
             {[
               { label: 'Advanced',     count: mockStudentSkills.filter((s) => s.level === 'Advanced').length,     dot: 'bg-white' },
               { label: 'Intermediate', count: mockStudentSkills.filter((s) => s.level === 'Intermediate').length, dot: 'bg-indigo-300' },
               { label: 'Beginner',     count: mockStudentSkills.filter((s) => s.level === 'Beginner').length,     dot: 'bg-indigo-400/60' },
             ].map((item) => (
-              <div key={item.label} className="flex items-center gap-2">
-                <span className={`w-2.5 h-2.5 rounded-full ${item.dot}`} />
+              <div key={item.label} className="flex items-center gap-1.5">
+                <span className={`w-2 h-2 rounded-full flex-shrink-0 ${item.dot}`} />
                 <div>
-                  <div className="text-xl font-bold text-white tabular">{item.count}</div>
-                  <div className="text-[10px] text-indigo-300">{item.label}</div>
+                  <div className="text-lg sm:text-xl font-bold text-white tabular">{item.count}</div>
+                  <div className="text-[9px] sm:text-[10px] text-indigo-300 leading-tight">{item.label}</div>
                 </div>
               </div>
             ))}
@@ -101,15 +104,15 @@ export default function SkillsPage() {
         </div>
       </div>
 
-      {/* ── Charts ── */}
-      <div className="grid lg:grid-cols-2 gap-6">
+      {/* ── Charts — stack on mobile, side-by-side on lg ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <h2 className="text-sm font-semibold text-gray-900 mb-1">Competency Radar</h2>
           <p className="text-xs text-gray-400 mb-4">Visual overview of your key skill dimensions</p>
-          <ResponsiveContainer width="100%" height={260}>
-            <RadarChart data={skillRadarData} margin={{ top: 10, right: 30, bottom: 10, left: 30 }}>
+          <ResponsiveContainer width="100%" height={240}>
+            <RadarChart data={skillRadarData} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
               <PolarGrid stroke="#e5e7eb" />
-              <PolarAngleAxis dataKey="subject" tick={{ fontSize: 11, fill: '#6b7280', fontWeight: 500 }} />
+              <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10, fill: '#6b7280', fontWeight: 500 }} />
               <Radar name="Score" dataKey="score" stroke="#6366f1" fill="#6366f1" fillOpacity={0.15} strokeWidth={2.5} dot={{ r: 3, fill: '#6366f1' }} />
             </RadarChart>
           </ResponsiveContainer>
@@ -118,37 +121,45 @@ export default function SkillsPage() {
         <Card>
           <h2 className="text-sm font-semibold text-gray-900 mb-1">Score Breakdown</h2>
           <p className="text-xs text-gray-400 mb-4">All skills ranked by competency score</p>
-          <ResponsiveContainer width="100%" height={260}>
-            <BarChart
-              data={[...mockStudentSkills].sort((a, b) => b.score - a.score).map((s) => ({ name: s.name, score: s.score }))}
-              layout="vertical" margin={{ left: 80 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f3f4f6" />
-              <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 10, fill: '#9ca3af' }} />
-              <YAxis type="category" dataKey="name" tick={{ fontSize: 10, fill: '#6b7280' }} width={80} />
-              <Tooltip
-                contentStyle={{ fontSize: 11, borderRadius: 10, border: '1px solid #e5e7eb', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
-                formatter={((val: unknown) => [`${val}%`, 'Score']) as never}
-              />
-              <Bar dataKey="score" radius={[0, 6, 6, 0]} fill="#6366f1" maxBarSize={14} />
-            </BarChart>
-          </ResponsiveContainer>
+          {/* Horizontal scroll container on mobile so the chart doesn't collapse */}
+          <div className="overflow-x-auto">
+            <div style={{ minWidth: 280 }}>
+              <ResponsiveContainer width="100%" height={260}>
+                <BarChart
+                  data={[...mockStudentSkills].sort((a, b) => b.score - a.score).map((s) => ({ name: s.name, score: s.score }))}
+                  layout="vertical" margin={{ left: 90, right: 8 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f3f4f6" />
+                  <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 10, fill: '#9ca3af' }} />
+                  <YAxis type="category" dataKey="name" tick={{ fontSize: 10, fill: '#6b7280' }} width={90} />
+                  <Tooltip
+                    contentStyle={{ fontSize: 11, borderRadius: 10, border: '1px solid #e5e7eb' }}
+                    formatter={((val: unknown) => [`${val}%`, 'Score']) as never}
+                  />
+                  <Bar dataKey="score" radius={[0, 6, 6, 0]} fill="#6366f1" maxBarSize={14} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
         </Card>
       </div>
 
       {/* ── Category tabs ── */}
       <Card>
-        <Tabs
-          tabs={[
-            { id: 'overview',   label: 'All Skills',       badge: mockStudentSkills.length },
-            { id: 'technical',  label: 'Technical',        badge: technical.length },
-            { id: 'domain',     label: 'Domain',           badge: domain.length },
-            { id: 'soft',       label: 'Soft Skills',      badge: soft.length },
-          ]}
-          active={active}
-          onChange={setActive}
-          className="mb-6"
-        />
+        {/* overflow-x-auto lets tabs scroll on narrow screens */}
+        <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0">
+          <Tabs
+            tabs={[
+              { id: 'overview',  label: 'All Skills',  badge: mockStudentSkills.length },
+              { id: 'technical', label: 'Technical',   badge: technical.length },
+              { id: 'domain',    label: 'Domain',      badge: domain.length },
+              { id: 'soft',      label: 'Soft Skills', badge: soft.length },
+            ]}
+            active={active}
+            onChange={setActive}
+            className="mb-6 whitespace-nowrap"
+          />
+        </div>
 
         {(() => {
           const list =

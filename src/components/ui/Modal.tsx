@@ -56,7 +56,7 @@ export default function Modal({
 
   const content = (
     <div
-      className="modal-backdrop flex items-center justify-center p-4"
+      className="modal-backdrop"
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
       <div
@@ -71,15 +71,15 @@ export default function Modal({
       >
         {/* Header */}
         {(title || !hideClose) && (
-          <div className="flex items-start justify-between gap-3 px-6 py-4 border-b border-gray-100">
-            <div>
+          <div className="flex items-start justify-between gap-3 px-4 sm:px-6 py-4 border-b border-gray-100 flex-shrink-0">
+            <div className="min-w-0">
               {title && (
                 <h2 id="modal-title" className="text-base font-semibold text-gray-900">
                   {title}
                 </h2>
               )}
               {description && (
-                <p className="text-sm text-gray-500 mt-0.5">{description}</p>
+                <p className="text-sm text-gray-500 mt-0.5 leading-snug">{description}</p>
               )}
             </div>
             {!hideClose && (
@@ -94,14 +94,15 @@ export default function Modal({
           </div>
         )}
 
-        {/* Body */}
-        <div className="flex-1 overflow-y-auto scrollbar-thin px-6 py-5">
+        {/* Body — constrained max-height so it scrolls on small screens */}
+        <div className="flex-1 overflow-y-auto scrollbar-thin px-4 sm:px-6 py-4 sm:py-5"
+          style={{ maxHeight: 'calc(85vh - 120px)' }}>
           {children}
         </div>
 
         {/* Footer */}
         {footer && (
-          <div className="px-6 py-4 border-t border-gray-100 bg-gray-50/50 flex items-center justify-end gap-3 flex-wrap">
+          <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-gray-100 bg-gray-50/50 flex items-center justify-end gap-3 flex-wrap flex-shrink-0">
             {footer}
           </div>
         )}

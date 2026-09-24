@@ -8,18 +8,25 @@
 @layer base {
   *, *::before, *::after {
     box-sizing: border-box;
+    /* Prevent any element from blowing out horizontal layout */
+    min-width: 0;
   }
 
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Prevent horizontal scrollbar on the document itself */
+    overflow-x: hidden;
   }
 
   body {
     font-family: 'Inter', system-ui, sans-serif;
     @apply bg-gray-50 text-gray-900;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    /* Constrain body to viewport width */
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 
   /* Better focus rings everywhere */
@@ -112,9 +119,11 @@
 
   /* ── Input base ── */
   .input-base {
-    @apply w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm text-gray-900 bg-white placeholder-gray-400
+    @apply w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-gray-900 bg-white placeholder-gray-400
            transition-all duration-150
            focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400;
+    /* 16px minimum prevents iOS auto-zoom on focus */
+    font-size: max(16px, 0.875rem);
   }
   .input-base:hover:not(:focus) {
     @apply border-gray-300;
@@ -122,9 +131,10 @@
 
   /* ── Select base ── */
   .select-base {
-    @apply border border-gray-200 rounded-xl px-3.5 py-2 text-sm bg-white text-gray-700
+    @apply border border-gray-200 rounded-xl px-3.5 py-2 bg-white text-gray-700
            transition-all duration-150 cursor-pointer
            focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400;
+    font-size: max(16px, 0.875rem);
   }
 
   /* ── Tooltip ── */
@@ -189,17 +199,39 @@
   .modal-backdrop {
     @apply fixed inset-0 z-50 bg-gray-900/60 backdrop-blur-sm;
     animation: fadeIn 0.2s ease-out;
+    /* Allow modal to scroll on small screens */
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  @media (min-height: 600px) {
+    .modal-backdrop {
+      align-items: center;
+    }
   }
   .modal-panel {
     animation: scaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Full width on mobile, capped on desktop */
+    width: 100%;
+    max-width: 100%;
   }
 
   /* ── Table ── */
+  /* Wrap any .table-base inside .table-responsive for mobile horizontal scroll */
+  .table-responsive {
+    @apply w-full overflow-x-auto -mx-0;
+    /* Subtle fade on the right edge to hint at scroll */
+    -webkit-overflow-scrolling: touch;
+  }
   .table-base {
     @apply w-full text-sm;
+    /* Prevent table from shrinking below its content */
+    min-width: 540px;
   }
   .table-base th {
-    @apply text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3 bg-gray-50 border-b border-gray-100;
+    @apply text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3 bg-gray-50 border-b border-gray-100 whitespace-nowrap;
   }
   .table-base td {
     @apply px-4 py-3 border-b border-gray-50 text-gray-700;

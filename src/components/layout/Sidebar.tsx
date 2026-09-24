@@ -7,8 +7,7 @@ import {
   LayoutDashboard, ClipboardCheck, Brain, Briefcase, BookOpen,
   FileText, User, Building2, Settings, Target, Users, BarChart3,
   GraduationCap, Award, Handshake, Lightbulb, FlaskConical, Zap,
-  LogOut, ChevronLeft, ChevronRight, Bell, TrendingUp, FolderOpen,
-  MessageSquare, Layers, PieChart, Globe, BookMarked, Cpu,
+  LogOut, ChevronLeft, ChevronRight, Layers, X,
 } from 'lucide-react'
 
 type PortalType = 'student' | 'industry' | 'academician' | 'institution'
@@ -30,23 +29,23 @@ const navGroups: Record<PortalType, NavGroup[]> = {
     {
       heading: 'Overview',
       items: [
-        { label: 'Dashboard',     href: '/student',               icon: <LayoutDashboard size={16} /> },
-        { label: 'My Profile',    href: '/student/profile',       icon: <User size={16} /> },
+        { label: 'Dashboard',          href: '/student',               icon: <LayoutDashboard size={16} /> },
+        { label: 'My Profile',         href: '/student/profile',       icon: <User size={16} /> },
       ],
     },
     {
       heading: 'Skills',
       items: [
-        { label: 'Assessments',       href: '/student/assessments',  icon: <ClipboardCheck size={16} /> },
-        { label: 'Skill Intelligence', href: '/student/skills',      icon: <Brain size={16} /> },
-        { label: 'Learning',          href: '/student/learning',     icon: <BookOpen size={16} /> },
+        { label: 'Assessments',        href: '/student/assessments',   icon: <ClipboardCheck size={16} /> },
+        { label: 'Skill Intelligence', href: '/student/skills',        icon: <Brain size={16} /> },
+        { label: 'Learning',           href: '/student/learning',      icon: <BookOpen size={16} /> },
       ],
     },
     {
       heading: 'Opportunities',
       items: [
-        { label: 'Opportunities',  href: '/student/opportunities',  icon: <Briefcase size={16} /> },
-        { label: 'Applications',   href: '/student/applications',   icon: <FileText size={16} />, badge: 3 },
+        { label: 'Opportunities',      href: '/student/opportunities', icon: <Briefcase size={16} /> },
+        { label: 'Applications',       href: '/student/applications',  icon: <FileText size={16} />, badge: 3 },
       ],
     },
   ],
@@ -54,8 +53,8 @@ const navGroups: Record<PortalType, NavGroup[]> = {
     {
       heading: 'Overview',
       items: [
-        { label: 'Dashboard',    href: '/industry',               icon: <LayoutDashboard size={16} /> },
-        { label: 'Profile',      href: '/industry/profile',       icon: <Building2 size={16} /> },
+        { label: 'Dashboard', href: '/industry',         icon: <LayoutDashboard size={16} /> },
+        { label: 'Profile',   href: '/industry/profile', icon: <Building2 size={16} /> },
       ],
     },
     {
@@ -70,7 +69,7 @@ const navGroups: Record<PortalType, NavGroup[]> = {
     {
       heading: 'Insights',
       items: [
-        { label: 'Analytics',    href: '/industry/analytics',    icon: <BarChart3 size={16} /> },
+        { label: 'Analytics', href: '/industry/analytics', icon: <BarChart3 size={16} /> },
       ],
     },
   ],
@@ -84,12 +83,12 @@ const navGroups: Record<PortalType, NavGroup[]> = {
     {
       heading: 'Programs',
       items: [
-        { label: 'Faculty Internships',  href: '/academician/programs?type=faculty',   icon: <GraduationCap size={16} /> },
-        { label: 'Industrial Training',  href: '/academician/programs?type=training',  icon: <Building2 size={16} /> },
-        { label: 'FDPs',                 href: '/academician/programs?type=fdp',        icon: <Award size={16} /> },
-        { label: 'Mentorship',           href: '/academician/programs?type=mentorship', icon: <Handshake size={16} /> },
-        { label: 'Workshops',            href: '/academician/programs?type=workshop',   icon: <Lightbulb size={16} /> },
-        { label: 'Research',             href: '/academician/programs?type=research',   icon: <FlaskConical size={16} /> },
+        { label: 'Faculty Internships', href: '/academician/programs?type=faculty',    icon: <GraduationCap size={16} /> },
+        { label: 'Industrial Training', href: '/academician/programs?type=training',   icon: <Building2 size={16} /> },
+        { label: 'FDPs',                href: '/academician/programs?type=fdp',         icon: <Award size={16} /> },
+        { label: 'Mentorship',          href: '/academician/programs?type=mentorship',  icon: <Handshake size={16} /> },
+        { label: 'Workshops',           href: '/academician/programs?type=workshop',    icon: <Lightbulb size={16} /> },
+        { label: 'Research',            href: '/academician/programs?type=research',    icon: <FlaskConical size={16} /> },
       ],
     },
     {
@@ -103,68 +102,83 @@ const navGroups: Record<PortalType, NavGroup[]> = {
     {
       heading: 'Overview',
       items: [
-        { label: 'Analytics',   href: '/institution',              icon: <BarChart3 size={16} /> },
-        { label: 'Students',    href: '/institution/students',     icon: <Users size={16} /> },
-        { label: 'Departments', href: '/institution/departments',  icon: <GraduationCap size={16} /> },
+        { label: 'Analytics',   href: '/institution',             icon: <BarChart3 size={16} /> },
+        { label: 'Students',    href: '/institution/students',    icon: <Users size={16} /> },
+        { label: 'Departments', href: '/institution/departments', icon: <GraduationCap size={16} /> },
       ],
     },
     {
       heading: 'Administration',
       items: [
-        { label: 'Settings',    href: '/institution/settings',    icon: <Settings size={16} /> },
+        { label: 'Settings', href: '/institution/settings', icon: <Settings size={16} /> },
       ],
     },
   ],
 }
 
 const portalMeta: Record<PortalType, { label: string; color: string; dot: string }> = {
-  student:      { label: 'Student Portal',    color: 'text-indigo-600', dot: 'bg-indigo-500' },
-  industry:     { label: 'Industry Portal',   color: 'text-blue-600',   dot: 'bg-blue-500' },
-  academician:  { label: 'Academician Portal',color: 'text-purple-600', dot: 'bg-purple-500' },
-  institution:  { label: 'Institution Admin', color: 'text-emerald-600',dot: 'bg-emerald-500' },
+  student:     { label: 'Student Portal',     color: 'text-indigo-600',  dot: 'bg-indigo-500' },
+  industry:    { label: 'Industry Portal',    color: 'text-blue-600',    dot: 'bg-blue-500' },
+  academician: { label: 'Academician Portal', color: 'text-purple-600',  dot: 'bg-purple-500' },
+  institution: { label: 'Institution Admin',  color: 'text-emerald-600', dot: 'bg-emerald-500' },
 }
 
 const portalUserMap: Record<PortalType, { name: string; role: string }> = {
-  student:     { name: 'Shriya Biju',      role: 'B.Tech CSE · Year 3' },
-  industry:    { name: 'TechCorp India',   role: 'Industry Partner' },
-  academician: { name: 'Dr. Aakash Achari',role: 'Associate Professor' },
-  institution: { name: 'BITS Pilani',      role: 'Institution Admin' },
+  student:     { name: 'Shriya Biju',       role: 'B.Tech CSE · Year 3' },
+  industry:    { name: 'TechCorp India',    role: 'Industry Partner' },
+  academician: { name: 'Dr. Aakash Achari', role: 'Associate Professor' },
+  institution: { name: 'BITS Pilani',       role: 'Institution Admin' },
 }
 
 interface SidebarProps {
   portal: PortalType
   userName?: string
+  /** Called when a nav item is clicked — used by mobile drawer to close */
+  onNavClick?: () => void
+  /** True when rendered inside the mobile drawer (disables the collapse toggle) */
+  mobileDrawer?: boolean
 }
 
-export default function Sidebar({ portal, userName }: SidebarProps) {
-  const pathname  = usePathname()
+export default function Sidebar({ portal, userName, onNavClick, mobileDrawer = false }: SidebarProps) {
+  const pathname = usePathname()
+  // On mobile drawer we always show expanded; collapse only available on desktop
   const [collapsed, setCollapsed] = useState(false)
-  const groups = navGroups[portal]
-  const meta   = portalMeta[portal]
-  const user   = portalUserMap[portal]
+
+  const groups      = navGroups[portal]
+  const meta        = portalMeta[portal]
+  const user        = portalUserMap[portal]
   const displayName = userName ?? user.name
 
+  // In mobile drawer mode never collapse
+  const isCollapsed = mobileDrawer ? false : collapsed
+
   const isActive = (href: string) => {
-    // Exact match for base dashboard routes, prefix for sub-pages
     if (href === `/${portal}`) return pathname === href
     return pathname.startsWith(href.split('?')[0])
   }
 
-  const totalBadge = groups.flatMap((g) => g.items).reduce((sum, i) => sum + (i.badge ?? 0), 0)
-
   return (
     <aside
       className={clsx(
-        'flex flex-col h-screen sticky top-0 flex-shrink-0',
-        'bg-white border-r border-gray-100',
-        'transition-[width] duration-200 ease-out',
-        collapsed ? 'w-[60px]' : 'w-[232px]',
+        'flex flex-col bg-white border-r border-gray-100 h-full',
+        // Mobile drawer: fixed full height, no width transition
+        mobileDrawer
+          ? 'w-[260px] shadow-card-lg'
+          : [
+              'h-screen sticky top-0 flex-shrink-0',
+              'transition-[width] duration-200 ease-out',
+              isCollapsed ? 'w-[60px]' : 'w-[232px]',
+            ].join(' '),
       )}
     >
-      {/* Brand */}
+      {/* ── Brand row ── */}
       <div className="flex items-center h-14 px-3 border-b border-gray-100 flex-shrink-0">
-        {!collapsed && (
-          <Link href="/" className="flex items-center gap-2 flex-1 min-w-0">
+        {!isCollapsed && (
+          <Link
+            href="/"
+            className="flex items-center gap-2 flex-1 min-w-0"
+            onClick={onNavClick}
+          >
             <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center flex-shrink-0 shadow-sm">
               <Zap size={13} className="text-white" />
             </div>
@@ -173,29 +187,45 @@ export default function Sidebar({ portal, userName }: SidebarProps) {
             </span>
           </Link>
         )}
-        {collapsed && (
+
+        {isCollapsed && !mobileDrawer && (
           <div className="flex-1 flex justify-center">
-            <Link href="/">
+            <Link href="/" onClick={onNavClick}>
               <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center shadow-sm">
                 <Zap size={13} className="text-white" />
               </div>
             </Link>
           </div>
         )}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="flex-shrink-0 w-6 h-6 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors ml-1"
-          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        >
-          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
-        </button>
+
+        {/* Desktop collapse toggle */}
+        {!mobileDrawer && (
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="flex-shrink-0 w-6 h-6 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors ml-1"
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          >
+            {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+          </button>
+        )}
+
+        {/* Mobile drawer close button */}
+        {mobileDrawer && onNavClick && (
+          <button
+            onClick={onNavClick}
+            className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors ml-auto"
+            aria-label="Close navigation"
+          >
+            <X size={16} />
+          </button>
+        )}
       </div>
 
-      {/* Portal label */}
-      {!collapsed && (
+      {/* ── Portal label ── */}
+      {!isCollapsed && (
         <div className="px-4 pt-3 pb-2 border-b border-gray-50">
           <div className="flex items-center gap-1.5">
-            <span className={clsx('w-1.5 h-1.5 rounded-full', meta.dot)} />
+            <span className={clsx('w-1.5 h-1.5 rounded-full flex-shrink-0', meta.dot)} />
             <p className={clsx('text-[10px] font-bold uppercase tracking-widest', meta.color)}>
               {meta.label}
             </p>
@@ -203,12 +233,11 @@ export default function Sidebar({ portal, userName }: SidebarProps) {
         </div>
       )}
 
-      {/* Nav */}
+      {/* ── Nav items ── */}
       <nav className="flex-1 overflow-y-auto scrollbar-hide px-2 py-2 space-y-4">
         {groups.map((group, gi) => (
           <div key={gi}>
-            {/* Group heading */}
-            {!collapsed && group.heading && (
+            {!isCollapsed && group.heading && (
               <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 px-2 mb-1.5 mt-1">
                 {group.heading}
               </p>
@@ -220,25 +249,25 @@ export default function Sidebar({ portal, userName }: SidebarProps) {
                   <Link
                     key={item.href}
                     href={item.href}
-                    title={collapsed ? item.label : undefined}
+                    title={isCollapsed ? item.label : undefined}
+                    onClick={onNavClick}
                     className={clsx(
-                      'flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium',
+                      'flex items-center gap-2.5 rounded-xl px-2.5 py-2.5 text-sm font-medium',
                       'transition-all duration-150 select-none relative',
                       'focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400',
                       active
                         ? 'bg-indigo-50 text-indigo-700'
                         : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
-                      collapsed && 'justify-center',
+                      isCollapsed && 'justify-center',
                     )}
                   >
-                    {/* Left active bar */}
                     {active && (
                       <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-indigo-500 rounded-r-full" />
                     )}
                     <span className={clsx('flex-shrink-0', active ? 'text-indigo-600' : 'text-gray-400')}>
                       {item.icon}
                     </span>
-                    {!collapsed && (
+                    {!isCollapsed && (
                       <>
                         <span className="flex-1 truncate">{item.label}</span>
                         {item.badge !== undefined && item.badge > 0 && (
@@ -251,8 +280,7 @@ export default function Sidebar({ portal, userName }: SidebarProps) {
                         )}
                       </>
                     )}
-                    {/* Collapsed badge dot */}
-                    {collapsed && item.badge !== undefined && item.badge > 0 && (
+                    {isCollapsed && item.badge !== undefined && item.badge > 0 && (
                       <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-indigo-500" />
                     )}
                   </Link>
@@ -263,9 +291,9 @@ export default function Sidebar({ portal, userName }: SidebarProps) {
         ))}
       </nav>
 
-      {/* Footer */}
+      {/* ── Footer ── */}
       <div className="flex-shrink-0 border-t border-gray-100 p-2">
-        {!collapsed && (
+        {!isCollapsed && (
           <div className="flex items-center gap-2.5 px-2.5 py-2 mb-1 rounded-xl hover:bg-gray-50 transition-colors cursor-default">
             <div className={clsx(
               'w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0',
@@ -282,15 +310,16 @@ export default function Sidebar({ portal, userName }: SidebarProps) {
         )}
         <Link
           href="/login"
-          title={collapsed ? 'Sign out' : undefined}
+          title={isCollapsed ? 'Sign out' : undefined}
+          onClick={onNavClick}
           className={clsx(
             'flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs text-gray-500',
             'hover:bg-red-50 hover:text-red-600 transition-all duration-150',
-            collapsed && 'justify-center',
+            isCollapsed && 'justify-center',
           )}
         >
           <LogOut size={14} />
-          {!collapsed && <span>Sign out</span>}
+          {!isCollapsed && <span>Sign out</span>}
         </Link>
       </div>
     </aside>

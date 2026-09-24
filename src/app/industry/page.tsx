@@ -39,18 +39,29 @@ function CandidateRow({ m, rank }: { m: typeof mockStudentMatches[0]['matches'][
   const ring  = m.matchScore >= 85 ? 'ring-emerald-200' : m.matchScore >= 70 ? 'ring-amber-200' : 'ring-gray-200'
 
   return (
-    <div className="flex items-center gap-4 p-3.5 rounded-xl hover:bg-gray-50 border border-transparent hover:border-gray-100 transition-all group">
+    <div className="flex items-start gap-3 p-3 rounded-xl hover:bg-gray-50 border border-transparent hover:border-gray-100 transition-all group">
       <RankBadge rank={rank} />
 
-      {/* Avatar + info */}
-      <div className="w-9 h-9 rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm flex items-center justify-center flex-shrink-0">
+      {/* Avatar */}
+      <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm flex items-center justify-center flex-shrink-0">
         {m.studentName.charAt(0)}
       </div>
 
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-gray-900 truncate">{m.studentName}</p>
-        <p className="text-xs text-gray-400 truncate">{m.institution} · {m.course} · Y{m.year}</p>
-        <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <p className="text-sm font-semibold text-gray-900 truncate">{m.studentName}</p>
+            <p className="text-xs text-gray-400 truncate">{m.institution} · Y{m.year}</p>
+          </div>
+          {/* Score ring */}
+          <div className={`flex-shrink-0 w-11 h-11 rounded-full ring-3 ${ring} flex flex-col items-center justify-center bg-white`}>
+            <span className={`text-sm font-extrabold tabular leading-none ${color}`}>{m.matchScore}%</span>
+            <span className="text-[8px] text-gray-400">match</span>
+          </div>
+        </div>
+
+        {/* Skill chips — wrap on mobile */}
+        <div className="flex flex-wrap gap-1 mt-1.5">
           {m.matchedSkills.slice(0, 3).map((s) => (
             <span key={s} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">
               <CheckCircle2 size={8} />{s}
@@ -62,19 +73,13 @@ function CandidateRow({ m, rank }: { m: typeof mockStudentMatches[0]['matches'][
             </span>
           ))}
         </div>
-      </div>
 
-      {/* Score ring */}
-      <div className={`flex-shrink-0 w-12 h-12 rounded-full ring-3 ${ring} flex flex-col items-center justify-center bg-white`}>
-        <span className={`text-base font-extrabold tabular leading-none ${color}`}>{m.matchScore}%</span>
-        <span className="text-[8px] text-gray-400">match</span>
-      </div>
-
-      <div className="flex-shrink-0 flex flex-col gap-1.5">
-        <Badge variant={m.assessmentStatus === 'Completed' ? 'success' : 'warning'} size="xs" dot>
-          {m.assessmentStatus}
-        </Badge>
-        <Button variant="outline" size="xs">Profile</Button>
+        <div className="flex items-center gap-2 mt-2">
+          <Badge variant={m.assessmentStatus === 'Completed' ? 'success' : 'warning'} size="xs" dot>
+            {m.assessmentStatus}
+          </Badge>
+          <Button variant="outline" size="xs">Profile</Button>
+        </div>
       </div>
     </div>
   )
@@ -149,8 +154,8 @@ export default function IndustryDashboard() {
         />
       </div>
 
-      {/* ── Top candidates + skill demand ── */}
-      <div className="grid lg:grid-cols-3 gap-6">
+      {/* ── Top candidates + skill demand — stack on mobile ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* Candidate list */}
         <Card className="lg:col-span-2">
@@ -211,7 +216,8 @@ export default function IndustryDashboard() {
             <Button variant="ghost" size="sm">Manage <ChevronRight size={13} /></Button>
           </Link>
         </div>
-        <div className="overflow-x-auto">
+        {/* Horizontally scrollable on mobile */}
+        <div className="table-responsive">
           <table className="table-base">
             <thead>
               <tr>
@@ -230,12 +236,12 @@ export default function IndustryDashboard() {
                 return (
                   <tr key={opp.id}>
                     <td>
-                      <p className="font-medium text-gray-900">{opp.title}</p>
+                      <p className="font-medium text-gray-900 whitespace-nowrap">{opp.title}</p>
                       <p className="text-xs text-gray-400">{opp.company}</p>
                     </td>
                     <td><Badge variant="indigo" size="xs">{opp.type}</Badge></td>
-                    <td className="text-gray-500">{opp.location}</td>
-                    <td className="text-gray-500 tabular">
+                    <td className="text-gray-500 whitespace-nowrap">{opp.location}</td>
+                    <td className="text-gray-500 tabular whitespace-nowrap">
                       {new Date(opp.deadline).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                     </td>
                     <td>

@@ -210,8 +210,8 @@ function CandidateCard({
             </div>
           </div>
 
-          {/* Skills grid */}
-          <div className="grid sm:grid-cols-2 gap-3 mt-4">
+          {/* Skills grid — stack on mobile */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
             <div>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1.5">Matched Skills</p>
               <div className="flex flex-wrap gap-1">
@@ -295,7 +295,7 @@ export default function StudentMatchesPage() {
       {current && (
         <>
           {/* Summary */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-3 sm:gap-4">
             {[
               { label: 'Strong Match (85%+)', count: current.matches.filter((m) => m.matchScore >= 85).length, color: 'emerald' },
               { label: 'Good Match (70–84%)', count: current.matches.filter((m) => m.matchScore >= 70 && m.matchScore < 85).length, color: 'amber' },

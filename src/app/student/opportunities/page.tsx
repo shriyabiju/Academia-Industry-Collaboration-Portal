@@ -94,8 +94,8 @@ export default function OpportunitiesPage() {
       </div>
 
       {/* ── Search + filters ── */}
-      <div className="flex items-center gap-3 flex-wrap">
-        <div className="relative flex-1 min-w-52">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-wrap">
+        <div className="relative flex-1 min-w-0">
           <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             value={search}
@@ -106,12 +106,13 @@ export default function OpportunitiesPage() {
           />
         </div>
 
-        <div className="flex items-center gap-1.5 bg-gray-100 p-1 rounded-xl">
+        {/* Type filter — scrollable on mobile */}
+        <div className="flex items-center gap-1.5 bg-gray-100 p-1 rounded-xl overflow-x-auto scrollbar-hide flex-shrink-0">
           {(['All', 'Internship', 'Project', 'Training'] as FilterType[]).map((t) => (
             <button
               key={t}
               onClick={() => setTypeFilter(t)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 whitespace-nowrap ${
                 typeFilter === t
                   ? 'bg-white text-gray-900 shadow-card'
                   : 'text-gray-500 hover:text-gray-700'
@@ -125,7 +126,7 @@ export default function OpportunitiesPage() {
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value as SortKey)}
-          className="select-base"
+          className="select-base flex-shrink-0"
         >
           <option value="match">Sort: Best Match</option>
           <option value="deadline">Sort: Deadline</option>
@@ -145,9 +146,9 @@ export default function OpportunitiesPage() {
         </div>
       </div>
 
-      {/* Cards grid */}
+      {/* Cards grid — 1 col mobile, 2 md, 3 xl */}
       {visible.length > 0 ? (
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
           {visible.map(({ opp, result, matched, partial: ps, missing }) => (
             <OpportunityCard
               key={opp.id}

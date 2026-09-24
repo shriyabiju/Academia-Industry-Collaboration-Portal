@@ -67,7 +67,7 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {open && (
-          <div className="md:hidden py-3 border-t border-gray-100 space-y-0.5 animate-fade-in-down">
+          <div className="md:hidden py-3 border-t border-gray-100 space-y-0.5 animate-fade-in-down pb-4">
             {navLinks.map((l) => (
               <a
                 key={l.href}

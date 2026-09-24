@@ -182,7 +182,7 @@ export default function LandingPage() {
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-blue-200/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             {/* Left */}
             <div className="animate-fade-in-up">
               <div className="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-100 rounded-full px-4 py-1.5 mb-6">
@@ -190,7 +190,7 @@ export default function LandingPage() {
                 <span className="text-xs font-semibold text-indigo-700">Smart India Hackathon 2026</span>
               </div>
 
-              <h1 className="text-5xl lg:text-6xl font-extrabold text-gray-900 leading-[1.1] tracking-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-[1.1] tracking-tight">
                 From Skills{' '}
                 <span className="text-gradient-indigo">to Opportunities</span>
               </h1>
@@ -214,8 +214,8 @@ export default function LandingPage() {
                 </Link>
               </div>
 
-              {/* Stats row */}
-              <div className="mt-10 flex flex-wrap gap-6 pt-6 border-t border-gray-200/80">
+              {/* Stats row — wrap on mobile */}
+              <div className="mt-10 flex flex-wrap gap-5 pt-6 border-t border-gray-200/80">
                 {stats.map((s) => (
                   <div key={s.label}>
                     <div className="text-2xl font-extrabold text-indigo-600 tabular">
@@ -240,7 +240,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14 animate-fade-in-up">
             <Badge variant="indigo" className="mb-4">The Skill Intelligence Loop</Badge>
-            <h2 className="text-4xl font-bold text-gray-900 tracking-tight">How Hire-X Works</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">How Hire-X Works</h2>
             <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
               Unlike a job board, Hire-X operates a continuous intelligence loop — keeping
               your competency profile current and opportunities relevant at every stage.
@@ -252,7 +252,7 @@ export default function LandingPage() {
             {/* Connecting line */}
             <div className="hidden lg:block absolute top-10 left-[8.33%] right-[8.33%] h-px bg-gradient-to-r from-indigo-200 via-blue-200 to-indigo-200" />
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
               {loopSteps.map((step, i) => (
                 <div key={step.id} className="flex flex-col items-center text-center group">
                   <div className={`relative z-10 w-20 h-20 rounded-2xl ${step.color} flex flex-col items-center justify-center text-white mb-4 shadow-md group-hover:shadow-lg group-hover:-translate-y-1 transition-all duration-200`}>
@@ -280,10 +280,10 @@ export default function LandingPage() {
       {/* ── FOR STUDENTS ──────────────────────────────────────────────────── */}
       <section id="students" className="py-24 bg-gradient-to-br from-indigo-50/50 to-blue-50/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
               <Badge variant="indigo" className="mb-4">For Students</Badge>
-              <h2 className="text-4xl font-bold text-gray-900 tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight leading-tight">
                 Know your skills.<br />Close your gaps.<br />Land the right role.
               </h2>
               <p className="mt-4 text-lg text-gray-600 leading-relaxed">
@@ -370,9 +370,9 @@ export default function LandingPage() {
       {/* ── FOR INDUSTRY ──────────────────────────────────────────────────── */}
       <section id="industry" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Stat grid */}
-            <div className="order-2 lg:order-1 grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            {/* Stat grid — 2x2 on mobile */}
+            <div className="order-2 lg:order-1 grid grid-cols-2 gap-3 sm:gap-4">
               {[
                 { label: 'Student Matches',   value: 1124, suffix: '',  sub: 'across 42 partners',    color: 'indigo' },
                 { label: 'Match Accuracy',    value: 78,   suffix: '%', sub: 'avg skill alignment',   color: 'green' },
@@ -392,7 +392,7 @@ export default function LandingPage() {
 
             <div className="order-1 lg:order-2">
               <Badge variant="info" className="mb-4">For Industry</Badge>
-              <h2 className="text-4xl font-bold text-gray-900 tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight leading-tight">
                 Find talent that already fits your stack.
               </h2>
               <p className="mt-4 text-lg text-gray-600 leading-relaxed">
@@ -424,10 +424,10 @@ export default function LandingPage() {
       {/* ── FOR ACADEMICIANS ──────────────────────────────────────────────── */}
       <section id="academicians" className="py-24 bg-gradient-to-br from-purple-50/50 to-indigo-50/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
               <Badge variant="purple" className="mb-4">For Academicians</Badge>
-              <h2 className="text-4xl font-bold text-gray-900 tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight leading-tight">
                 Bridge expertise with industry reality.
               </h2>
               <p className="mt-4 text-lg text-gray-600 leading-relaxed">
@@ -488,7 +488,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <Badge variant="success" className="mb-4">For Institutions</Badge>
-            <h2 className="text-4xl font-bold text-gray-900 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
               Placement intelligence at your fingertips
             </h2>
             <p className="mt-4 text-lg text-gray-500 max-w-xl mx-auto leading-relaxed">
@@ -497,7 +497,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {[
               { icon: <Users size={22} />,     value: 1842, suffix: '',  label: 'Students Assessed', sub: '77% coverage',        color: 'indigo' },
               { icon: <TrendingUp size={22} />, value: 68,   suffix: '%', label: 'Placement Rate',    sub: '↑ 6% YoY',            color: 'green' },
@@ -524,12 +524,12 @@ export default function LandingPage() {
       <section className="py-24 bg-gray-50/70">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 tracking-tight">Why Hire-X?</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">Why Hire-X?</h2>
             <p className="mt-4 text-lg text-gray-500 max-w-xl mx-auto leading-relaxed">
               Not a job board. A continuous skill intelligence platform built for the India talent ecosystem.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {benefits.map((b) => (
               <div key={b.title}
                 className="bg-white rounded-2xl border border-gray-100 shadow-card p-6 hover:shadow-card-md hover:-translate-y-0.5 transition-all duration-200">

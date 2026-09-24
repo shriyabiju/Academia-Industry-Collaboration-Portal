@@ -158,14 +158,14 @@ export default function AcademicianDashboard() {
                 </div>
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="w-28 text-[10px] text-gray-500 text-right">Industry {item.demand}%</span>
+                    <span className="w-24 sm:w-28 text-[10px] text-gray-500 text-right flex-shrink-0">Industry {item.demand}%</span>
                     <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
                       <div className="h-full bg-indigo-500 rounded-full transition-all duration-700"
                         style={{ width: `${item.demand}%` }} />
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-28 text-[10px] text-gray-500 text-right">Curriculum {item.coverage}%</span>
+                    <span className="w-24 sm:w-28 text-[10px] text-gray-500 text-right flex-shrink-0">Curriculum {item.coverage}%</span>
                     <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
                       <div className={`h-full rounded-full transition-all duration-700 ${urgent ? 'bg-amber-400' : 'bg-emerald-400'}`}
                         style={{ width: `${item.coverage}%` }} />
@@ -195,8 +195,8 @@ export default function AcademicianDashboard() {
         </div>
       </Card>
 
-      {/* ── Applications + Deadlines ── */}
-      <div className="grid lg:grid-cols-3 gap-6">
+      {/* ── Applications + Deadlines — stack on mobile ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* My applications */}
         <Card className="lg:col-span-1">
           <div className="flex items-center justify-between mb-4">
@@ -261,7 +261,7 @@ export default function AcademicianDashboard() {
         </Card>
       </div>
 
-      {/* ── Featured programs ── */}
+      {/* ── Featured programs — 1 col mobile, 2 sm, 4 xl ── */}
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-base font-semibold text-gray-900">Featured Programs</h2>
@@ -269,7 +269,7 @@ export default function AcademicianDashboard() {
             <Button variant="ghost" size="sm">View All <ArrowRight size={13} /></Button>
           </Link>
         </div>
-        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5">
           {mockAcademicPrograms.slice(0, 4).map((prog) => {
             const tc = typeColors[prog.type] ?? 'indigo'
             return (
