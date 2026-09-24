@@ -1,86 +1,173 @@
 'use client'
-import React, { useState } from 'react'
-import { Search, SlidersHorizontal, Zap } from 'lucide-react'
+import React, { useMemo, useState } from 'react'
+import { Search, Zap, TrendingUp, AlertTriangle, BarChart3, SlidersHorizontal } from 'lucide-react'
 import Card from '@/components/ui/Card'
 import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
 import OpportunityCard from '@/components/ui/OpportunityCard'
-import SkillLoop from '@/components/shared/SkillLoop'
+import EmptyState from '@/components/ui/EmptyState'
+import AnimatedNumber from '@/components/ui/AnimatedNumber'
 import { mockOpportunities } from '@/data/opportunities'
+import { currentStudent } from '@/data/students'
+import {
+  calculateOpportunityMatch,
+  getMatchedSkills,
+  getPartialSkills,
+  getMissingSkills,
+} from '@/lib/matching'
+
+type FilterType = 'All' | 'Internship' | 'Project' | 'Training'
+type SortKey   = 'match' | 'deadline'
 
 export default function OpportunitiesPage() {
-  const [filter, setFilter] = useState<string>('All')
-  const types = ['All', 'Internship', 'Project', 'Training']
+  const [typeFilter, setTypeFilter] = useState<FilterType>('All')
+  const [search,     setSearch]     = useState('')
+  const [sortBy,     setSortBy]     = useState<SortKey>('match')
 
-  const filtered = filter === 'All' ? mockOpportunities : mockOpportunities.filter((o) => o.type === filter)
-  const sorted = [...filtered].sort((a, b) => (b.matchScore ?? 0) - (a.matchScore ?? 0))
+  const student = currentStudent.profile
+
+  // Engine — memoised
+  const computed = useMemo(() =>
+    mockOpportunities.map((opp) => ({
+      opp,
+      result:  calculateOpportunityMatch(student, opp.spec),
+      matched: getMatchedSkills(student, opp.spec),
+      partial: getPartialSkills(student, opp.spec),
+      missing: getMissingSkills(student, opp.spec),
+    })),
+  [student])
+
+  const visible = useMemo(() => {
+    let list = computed
+    if (typeFilter !== 'All')       list = list.filter((c) => c.opp.type === typeFilter)
+    if (search.trim())              list = list.filter((c) =>
+      c.opp.title.toLowerCase().includes(search.toLowerCase()) ||
+      c.opp.company.toLowerCase().includes(search.toLowerCase()))
+    return [...list].sort((a, b) =>
+      sortBy === 'match'
+        ? b.result.overallScore - a.result.overallScore
+        : new Date(a.opp.deadline).getTime() - new Date(b.opp.deadline).getTime())
+  }, [computed, typeFilter, search, sortBy])
+
+  const strong  = computed.filter((c) => c.result.overallScore >= 80).length
+  const good    = computed.filter((c) => c.result.overallScore >= 65 && c.result.overallScore < 80).length
+  const partial = computed.filter((c) => c.result.overallScore < 65).length
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 page-enter">
+
+      {/* ── Header ── */}
       <div className="flex items-start justify-between flex-wrap gap-4">
         <div>
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Step 3 of 6 — Match</p>
           <h1 className="text-2xl font-bold text-gray-900">Opportunity Matching</h1>
           <p className="text-sm text-gray-500 mt-1">
-            Opportunities matched to your skill profile — ordered by match score
+            Live scores from your assessed skill profile ·{' '}
+            <span className="font-medium text-gray-700">Technical 50% · Assessment 20% · Projects 15% · Soft 10% · Experience 5%</span>
           </p>
+        </div>
+        <div className="flex items-center gap-2 px-4 py-2 bg-indigo-50 border border-indigo-100 rounded-xl text-xs font-medium text-indigo-700">
+          <Zap size={13} className="text-indigo-500" />
+          Engine-scored · Real-time
         </div>
       </div>
 
-      {/* Loop context */}
-      <Card padding="sm" className="bg-indigo-50/60 border-indigo-100">
-        <div className="flex items-center gap-2 mb-2">
-          <Zap size={14} className="text-indigo-600" />
-          <p className="text-xs font-semibold text-indigo-800">Skill Intelligence Loop — Step 3: Match</p>
-        </div>
-        <p className="text-xs text-indigo-600 mb-2">
-          Your skill profile was used to rank these opportunities. Match scores are based on your assessed competencies vs. required skills.
-          <span className="font-semibold"> This is prototype data — future versions use Sentence Transformers + Scikit-learn.</span>
-        </p>
-        <SkillLoop activeStep={3} orientation="horizontal" size="sm" />
-      </Card>
+      {/* ── Match summary KPIs ── */}
+      <div className="grid grid-cols-3 gap-4">
+        {[
+          { count: strong,  label: 'Strong Match',  sub: '80%+',   color: 'emerald', icon: <TrendingUp size={15} className="text-emerald-500" /> },
+          { count: good,    label: 'Good Match',    sub: '65–79%', color: 'amber',   icon: <BarChart3 size={15} className="text-amber-500" /> },
+          { count: partial, label: 'Partial Match', sub: '<65%',   color: 'gray',    icon: <AlertTriangle size={15} className="text-gray-400" /> },
+        ].map((item) => (
+          <div key={item.label}
+            className={`bg-${item.color === 'gray' ? 'gray' : item.color}-50 border border-${item.color === 'gray' ? 'gray' : item.color}-100 rounded-2xl p-4 flex items-center gap-3`}>
+            {item.icon}
+            <div>
+              <div className={`text-2xl font-bold text-${item.color === 'gray' ? 'gray-500' : item.color + '-600'} tabular`}>
+                <AnimatedNumber value={item.count} />
+              </div>
+              <div className="text-xs text-gray-600 font-medium">{item.label}</div>
+              <div className="text-[10px] text-gray-400">{item.sub}</div>
+            </div>
+          </div>
+        ))}
+      </div>
 
-      {/* Search + Filter */}
+      {/* ── Search + filters ── */}
       <div className="flex items-center gap-3 flex-wrap">
-        <div className="relative flex-1 min-w-48">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+        <div className="relative flex-1 min-w-52">
+          <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
-            type="text"
-            placeholder="Search opportunities..."
-            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-white"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            type="search"
+            placeholder="Search by role or company…"
+            className="input-base pl-9"
           />
         </div>
-        <div className="flex gap-2">
-          {types.map((t) => (
+
+        <div className="flex items-center gap-1.5 bg-gray-100 p-1 rounded-xl">
+          {(['All', 'Internship', 'Project', 'Training'] as FilterType[]).map((t) => (
             <button
               key={t}
-              onClick={() => setFilter(t)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filter === t ? 'bg-indigo-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'}`}
+              onClick={() => setTypeFilter(t)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 ${
+                typeFilter === t
+                  ? 'bg-white text-gray-900 shadow-card'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
             >
               {t}
             </button>
           ))}
         </div>
+
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value as SortKey)}
+          className="select-base"
+        >
+          <option value="match">Sort: Best Match</option>
+          <option value="deadline">Sort: Deadline</option>
+        </select>
       </div>
 
-      {/* Match score legend */}
-      <div className="flex items-center gap-6 text-xs text-gray-500 flex-wrap">
-        <span className="font-medium text-gray-700">Match Score:</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-green-500" /> 80%+ Strong match</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-amber-400" /> 65–79% Good match</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-gray-400" /> &lt;65% Partial match</span>
+      {/* Results count */}
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-gray-500">
+          Showing <strong className="text-gray-800">{visible.length}</strong> of{' '}
+          <strong className="text-gray-800">{computed.length}</strong> opportunities
+        </p>
+        <div className="flex items-center gap-3 text-xs text-gray-400">
+          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-emerald-100 border border-emerald-200" /> Matched</span>
+          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-amber-50 border border-amber-200" /> Partial</span>
+          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-red-50 border border-red-100" /> Missing</span>
+        </div>
       </div>
 
-      {/* Opportunity grid */}
-      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
-        {sorted.map((opp) => (
-          <OpportunityCard key={opp.id} opportunity={opp} showMatchScore portal="student" />
-        ))}
-      </div>
-
-      {sorted.length === 0 && (
-        <Card className="text-center py-12">
-          <p className="text-gray-400 text-sm">No opportunities match the selected filter.</p>
-        </Card>
+      {/* Cards grid */}
+      {visible.length > 0 ? (
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+          {visible.map(({ opp, result, matched, partial: ps, missing }) => (
+            <OpportunityCard
+              key={opp.id}
+              opportunity={opp}
+              showMatchScore
+              portal="student"
+              liveScore={result.overallScore}
+              matchedSkills={matched}
+              partialSkills={ps}
+              missingSkills={missing}
+            />
+          ))}
+        </div>
+      ) : (
+        <EmptyState
+          icon={<SlidersHorizontal size={28} />}
+          title="No opportunities match your filters"
+          description="Try adjusting the type filter or clearing the search."
+          action={{ label: 'Clear Filters', onClick: () => { setTypeFilter('All'); setSearch('') } }}
+        />
       )}
     </div>
   )

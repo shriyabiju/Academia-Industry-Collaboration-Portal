@@ -139,3 +139,83 @@ export const mockAcademicianKPIs = {
   industryCollaborations: 18,
   researchOpportunities: 9,
 }
+
+export interface AcademicianProfile {
+  name: string
+  email: string
+  designation: string
+  institution: string
+  department: string
+  specialization: string[]
+  experience: number
+  publications: number
+  bio: string
+  phone: string
+}
+
+export const mockAcademicianProfile: AcademicianProfile = {
+  name: 'Dr. Aakash Achari',
+  email: 'aakash.achari@bits.ac.in',
+  designation: 'Associate Professor',
+  institution: 'BITS Pilani',
+  department: 'Department of Computer Science',
+  specialization: ['Machine Learning', 'Data Science', 'Distributed Systems'],
+  experience: 12,
+  publications: 24,
+  bio: 'Associate Professor with 12 years of teaching and research experience in ML and distributed systems. Passionate about bridging academia and industry to give students real-world exposure.',
+  phone: '+91 98765 43210',
+}
+
+export type ApplicationStatus = 'Applied' | 'Under Review' | 'Shortlisted' | 'Selected' | 'Rejected'
+
+export interface MyApplication {
+  id: string
+  programId: string
+  programTitle: string
+  organization: string
+  type: AcademicProgramType
+  appliedDate: string
+  status: ApplicationStatus
+  nextStep?: string
+}
+
+export const mockMyApplications: MyApplication[] = [
+  {
+    id: 'MYAPP001',
+    programId: 'AP001',
+    programTitle: 'Faculty Internship in AI/ML',
+    organization: 'Microsoft Research India',
+    type: 'Faculty Internship',
+    appliedDate: '2026-09-05',
+    status: 'Shortlisted',
+    nextStep: 'Interview scheduled for Oct 5, 2026',
+  },
+  {
+    id: 'MYAPP002',
+    programId: 'AP003',
+    programTitle: 'Faculty Development Program — Data Analytics',
+    organization: 'IIT Delhi & NASSCOM',
+    type: 'FDP',
+    appliedDate: '2026-09-10',
+    status: 'Under Review',
+    nextStep: 'Results expected by Sep 28, 2026',
+  },
+  {
+    id: 'MYAPP003',
+    programId: 'AP006',
+    programTitle: 'Research Collaboration — Sustainable Tech',
+    organization: 'Tata Consultancy Services (TCS)',
+    type: 'Research Collaboration',
+    appliedDate: '2026-09-01',
+    status: 'Applied',
+  },
+]
+
+export const typeToQueryParam: Record<AcademicProgramType, string> = {
+  'Faculty Internship': 'Faculty Internship',
+  'Industrial Training': 'Industrial Training',
+  'FDP': 'FDP',
+  'Workshop': 'Workshop',
+  'Mentorship': 'Mentorship',
+  'Research Collaboration': 'Research Collaboration',
+}

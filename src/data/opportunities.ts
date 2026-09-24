@@ -1,5 +1,7 @@
 // PROTOTYPE DATA — Replace with FastAPI /api/opportunities endpoints
 
+import type { OpportunitySpec } from '@/lib/matching'
+
 export type OpportunityType = 'Internship' | 'Project' | 'Training' | 'Full-time' | 'Part-time'
 
 export interface RequiredSkill {
@@ -23,8 +25,9 @@ export interface Opportunity {
   eligibility: string
   postedDate: string
   deadline: string
-  requiredSkills: RequiredSkill[]
-  matchScore?: number
+  requiredSkills: RequiredSkill[]   // used by existing UI components
+  spec: OpportunitySpec             // used by the matching engine
+  matchScore?: number               // kept for static fallback only
   matchedSkills?: string[]
   missingSkills?: string[]
   matchExplanation?: string
@@ -32,6 +35,9 @@ export interface Opportunity {
 }
 
 export const mockOpportunities: Opportunity[] = [
+  // ──────────────────────────────────────────────────────────────────────────
+  // OPP001 — Software Engineering Intern @ TechCorp India
+  // ──────────────────────────────────────────────────────────────────────────
   {
     id: 'OPP001',
     title: 'Software Engineering Intern',
@@ -46,21 +52,42 @@ export const mockOpportunities: Opportunity[] = [
     eligibility: 'B.Tech 3rd or 4th year, CGPA ≥ 7.0',
     postedDate: '2026-09-01',
     deadline: '2026-10-15',
+    // ── legacy UI fields (preserved) ───────────────────────────────────────
     requiredSkills: [
-      { name: 'Python', requiredLevel: 'Intermediate', isMatched: true, studentLevel: 'Advanced' },
-      { name: 'SQL', requiredLevel: 'Intermediate', isMatched: true, studentLevel: 'Intermediate' },
-      { name: 'REST APIs', requiredLevel: 'Intermediate', isMatched: true, studentLevel: 'Intermediate' },
-      { name: 'React', requiredLevel: 'Intermediate', isMatched: false, studentLevel: 'Beginner' },
-      { name: 'Problem Solving', requiredLevel: 'Intermediate', isMatched: true, studentLevel: 'Advanced' },
-      { name: 'Cloud Deployment', requiredLevel: 'Beginner', isMatched: false, studentLevel: 'Beginner' },
+      { name: 'Python',               requiredLevel: 'Intermediate' },
+      { name: 'SQL',                  requiredLevel: 'Intermediate' },
+      { name: 'REST APIs',            requiredLevel: 'Intermediate' },
+      { name: 'React',                requiredLevel: 'Intermediate' },
+      { name: 'Problem Solving',      requiredLevel: 'Intermediate' },
+      { name: 'Cloud Deployment',     requiredLevel: 'Beginner'     },
     ],
-    matchScore: 84,
-    matchedSkills: ['Python', 'SQL', 'REST APIs', 'Problem Solving'],
-    missingSkills: ['React', 'Cloud Deployment'],
-    matchExplanation:
-      'Your assessed skill profile matches 84% of the required competencies for this opportunity. Your Python and Problem Solving skills are rated above the required level. Closing the React and Cloud Deployment gaps would improve your match to 100%.',
     tags: ['Python', 'React', 'SQL', 'Backend'],
+    // ── engine spec (new) ──────────────────────────────────────────────────
+    spec: {
+      id: 'OPP001',
+      title: 'Software Engineering Intern',
+      company: 'TechCorp India',
+      requiredSkills: [
+        { name: 'Python',               category: 'Technical', requiredLevel: 'Intermediate' },
+        { name: 'SQL',                  category: 'Technical', requiredLevel: 'Intermediate' },
+        { name: 'REST APIs',            category: 'Technical', requiredLevel: 'Intermediate' },
+        { name: 'React',                category: 'Technical', requiredLevel: 'Intermediate' },
+        { name: 'Git & Version Control',category: 'Technical', requiredLevel: 'Intermediate' },
+        { name: 'Cloud Deployment',     category: 'Technical', requiredLevel: 'Beginner'     },
+        { name: 'Problem Solving',      category: 'Soft',      requiredLevel: 'Intermediate' },
+        { name: 'Communication',        category: 'Soft',      requiredLevel: 'Beginner'     },
+      ],
+      minAssessmentScore: 65,
+      requiredDomains: ['Software Development'],
+      minExperienceMonths: 0,
+      preferredCertifications: ['AWS Cloud Practitioner'],
+      minYear: 3,
+    },
   },
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // OPP002 — Data Analyst Intern @ AnalyticsFirst
+  // ──────────────────────────────────────────────────────────────────────────
   {
     id: 'OPP002',
     title: 'Data Analyst Intern',
@@ -76,19 +103,36 @@ export const mockOpportunities: Opportunity[] = [
     postedDate: '2026-09-05',
     deadline: '2026-10-01',
     requiredSkills: [
-      { name: 'Python', requiredLevel: 'Intermediate', isMatched: true, studentLevel: 'Advanced' },
-      { name: 'SQL', requiredLevel: 'Intermediate', isMatched: true, studentLevel: 'Intermediate' },
-      { name: 'Data Analysis', requiredLevel: 'Intermediate', isMatched: true, studentLevel: 'Intermediate' },
-      { name: 'Data Visualization', requiredLevel: 'Intermediate', isMatched: false, studentLevel: 'Beginner' },
-      { name: 'Communication', requiredLevel: 'Intermediate', isMatched: true, studentLevel: 'Intermediate' },
+      { name: 'Python',             requiredLevel: 'Intermediate' },
+      { name: 'SQL',                requiredLevel: 'Intermediate' },
+      { name: 'Data Analysis',      requiredLevel: 'Intermediate' },
+      { name: 'Data Visualization', requiredLevel: 'Intermediate' },
+      { name: 'Communication',      requiredLevel: 'Intermediate' },
     ],
-    matchScore: 76,
-    matchedSkills: ['Python', 'SQL', 'Data Analysis', 'Communication'],
-    missingSkills: ['Data Visualization'],
-    matchExplanation:
-      'Your profile matches 76% of the requirements. Strong alignment on Python and data analysis skills. Improving data visualization would significantly boost your match for this and similar roles.',
     tags: ['Data Analysis', 'Python', 'SQL', 'Visualization'],
+    spec: {
+      id: 'OPP002',
+      title: 'Data Analyst Intern',
+      company: 'AnalyticsFirst',
+      requiredSkills: [
+        { name: 'Python',             category: 'Technical', requiredLevel: 'Intermediate' },
+        { name: 'SQL',                category: 'Technical', requiredLevel: 'Intermediate' },
+        { name: 'Data Analysis',      category: 'Domain',    requiredLevel: 'Intermediate' },
+        { name: 'Data Visualization', category: 'Domain',    requiredLevel: 'Intermediate' },
+        { name: 'Machine Learning',   category: 'Domain',    requiredLevel: 'Beginner'     },
+        { name: 'Communication',      category: 'Soft',      requiredLevel: 'Intermediate' },
+        { name: 'Problem Solving',    category: 'Soft',      requiredLevel: 'Intermediate' },
+      ],
+      minAssessmentScore: 60,
+      requiredDomains: ['Data Science & AI'],
+      minExperienceMonths: 0,
+      preferredCertifications: ['Google Data Analytics', 'IBM Data Science'],
+    },
   },
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // OPP003 — AI/ML Research Project @ IIT Research Lab
+  // ──────────────────────────────────────────────────────────────────────────
   {
     id: 'OPP003',
     title: 'AI/ML Research Project',
@@ -104,19 +148,36 @@ export const mockOpportunities: Opportunity[] = [
     postedDate: '2026-09-10',
     deadline: '2026-09-30',
     requiredSkills: [
-      { name: 'Python', requiredLevel: 'Advanced', isMatched: false, studentLevel: 'Advanced' },
-      { name: 'Machine Learning', requiredLevel: 'Intermediate', isMatched: false, studentLevel: 'Beginner' },
-      { name: 'Data Analysis', requiredLevel: 'Advanced', isMatched: false, studentLevel: 'Intermediate' },
-      { name: 'Problem Solving', requiredLevel: 'Advanced', isMatched: true, studentLevel: 'Advanced' },
-      { name: 'Communication', requiredLevel: 'Intermediate', isMatched: true, studentLevel: 'Intermediate' },
+      { name: 'Python',          requiredLevel: 'Advanced'     },
+      { name: 'Machine Learning',requiredLevel: 'Intermediate' },
+      { name: 'Data Analysis',   requiredLevel: 'Advanced'     },
+      { name: 'Problem Solving', requiredLevel: 'Advanced'     },
+      { name: 'Communication',   requiredLevel: 'Intermediate' },
     ],
-    matchScore: 71,
-    matchedSkills: ['Python', 'Problem Solving', 'Communication'],
-    missingSkills: ['Machine Learning', 'Advanced Data Analysis'],
-    matchExplanation:
-      'Your profile matches 71% of requirements. You meet the Python and problem-solving bar, but the ML and advanced data analysis skills are below required levels. This is a growth opportunity.',
     tags: ['ML', 'NLP', 'Python', 'Research'],
+    spec: {
+      id: 'OPP003',
+      title: 'AI/ML Research Project',
+      company: 'IIT Research Lab',
+      requiredSkills: [
+        { name: 'Python',             category: 'Technical', requiredLevel: 'Advanced'     },
+        { name: 'Machine Learning',   category: 'Domain',    requiredLevel: 'Intermediate' },
+        { name: 'Data Analysis',      category: 'Domain',    requiredLevel: 'Advanced'     },
+        { name: 'Data Visualization', category: 'Domain',    requiredLevel: 'Intermediate' },
+        { name: 'Problem Solving',    category: 'Soft',      requiredLevel: 'Advanced'     },
+        { name: 'Communication',      category: 'Soft',      requiredLevel: 'Intermediate' },
+      ],
+      minAssessmentScore: 70,
+      requiredDomains: ['Data Science & AI'],
+      minExperienceMonths: 0,
+      preferredCertifications: ['DeepLearning.AI', 'Coursera ML Specialization'],
+      minYear: 3,
+    },
   },
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // OPP004 — Frontend Developer Intern @ Designify
+  // ──────────────────────────────────────────────────────────────────────────
   {
     id: 'OPP004',
     title: 'Frontend Developer Intern',
@@ -132,16 +193,28 @@ export const mockOpportunities: Opportunity[] = [
     postedDate: '2026-09-15',
     deadline: '2026-10-20',
     requiredSkills: [
-      { name: 'React', requiredLevel: 'Intermediate', isMatched: false, studentLevel: 'Beginner' },
-      { name: 'CSS/Tailwind', requiredLevel: 'Intermediate', isMatched: false, studentLevel: 'Beginner' },
-      { name: 'Problem Solving', requiredLevel: 'Intermediate', isMatched: true, studentLevel: 'Advanced' },
-      { name: 'Communication', requiredLevel: 'Intermediate', isMatched: true, studentLevel: 'Intermediate' },
+      { name: 'React',          requiredLevel: 'Intermediate' },
+      { name: 'CSS/Tailwind',   requiredLevel: 'Intermediate' },
+      { name: 'Problem Solving',requiredLevel: 'Intermediate' },
+      { name: 'Communication',  requiredLevel: 'Intermediate' },
     ],
-    matchScore: 62,
-    matchedSkills: ['Problem Solving', 'Communication'],
-    missingSkills: ['React', 'CSS/Tailwind'],
-    matchExplanation:
-      'Your soft skills are a good match, but technical frontend skills are below the required threshold. Completing React and CSS training would dramatically improve your match.',
     tags: ['React', 'Frontend', 'UI/UX', 'Design'],
+    spec: {
+      id: 'OPP004',
+      title: 'Frontend Developer Intern',
+      company: 'Designify',
+      requiredSkills: [
+        { name: 'React',               category: 'Technical', requiredLevel: 'Intermediate' },
+        { name: 'Git & Version Control',category: 'Technical', requiredLevel: 'Beginner'    },
+        { name: 'REST APIs',           category: 'Technical', requiredLevel: 'Beginner'     },
+        { name: 'Problem Solving',     category: 'Soft',      requiredLevel: 'Intermediate' },
+        { name: 'Communication',       category: 'Soft',      requiredLevel: 'Intermediate' },
+        { name: 'Teamwork',            category: 'Soft',      requiredLevel: 'Intermediate' },
+      ],
+      minAssessmentScore: 55,
+      requiredDomains: ['UI/UX', 'Software Development'],
+      minExperienceMonths: 0,
+      preferredCertifications: ['Google UX Design'],
+    },
   },
 ]
